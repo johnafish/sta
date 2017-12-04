@@ -21,6 +21,15 @@ class Stock:
         # Get data from json of successful request
         return r.json()["Time Series (Daily)"]
 
+    def current_price(self):
+        request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={0}&interval=1min&apikey={1}".format(self.symbol, self.alphavantage_api_key)
+        r = requests.get(request_url)
+        if r.status_code != 200:
+            return False
+
+        for key, value in r.json()["Time Series (1min)"].items():
+            return value["4. close"]
+
     def rolling_avg(self, num_days):
         if not self.daily_data:
             self.get_daily_data()
@@ -55,5 +64,6 @@ if __name__ == '__main__':
     for stock in stocks:
         s = Stock(stock)
         print(stock)
-        print(s.rolling_avg(10))
-        print(s.rolling_stdev(10))
+        print(s.current_price())
+        print(s.rolling_avg(30))
+        print(s.rolling_stdev(30))
