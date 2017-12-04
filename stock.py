@@ -28,7 +28,7 @@ class Stock:
             return False
 
         for key, value in r.json()["Time Series (1min)"].items():
-            return value["4. close"]
+            return float(value["4. close"])
 
     def rolling_avg(self, num_days):
         if not self.daily_data:
