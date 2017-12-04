@@ -1,3 +1,3 @@
-#sta
+# sta
 
 stocks / trading / ai
