@@ -1,4 +1,4 @@
-import os, requests, math
+import os, requests, math,json
 
 class Stock:
     
@@ -8,11 +8,12 @@ class Stock:
         if os.environ.get("ALPHAVANTAGE_API_KEY"):
             self.alphavantage_api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
         else:
+            print(os.environ)
             raise EnvironmentError("Must set ALPHAVANTAGE_API_KEY")
-
+        self.date = date
         self.daily_data = self.get_daily_data()
-        self.fiftydayaverage = self.get_moving_average_50(50)
-        self.twodayaverage = self.get_moving_average_200(200)
+        self.fiftydayaverage = self.get_moving_average(50)
+        self.twodayaverage = self.get_moving_average(200)
         self.stock_prediction = self.stock_prediction()
 
     def get_daily_data(self):
@@ -35,9 +36,9 @@ class Stock:
             return float(value["4. close"])
 
     def get_moving_average(self, timeperiod) : 
-        url = "https://www.alphavantage.co/query?function=SMA&symbol="+self.ticker+"&interval=daily&time_period="+timeperiod+"&series_type=low&apikey="+apikey
-        data = json.load(urllib.request.urlopen(url))
-        return data["Technical Analysis: SMA"][self.date]["SMA"]
+        url = "https://www.alphavantage.co/query?function=SMA&symbol="+self.symbol+"&interval=daily&time_period="+str(timeperiod)+"&series_type=low&apikey="+self.alphavantage_api_key
+        data = requests.get(url)
+        return data.json()["Technical Analysis: SMA"][self.date]["SMA"]
 
 
     def stock_prediction(self):
