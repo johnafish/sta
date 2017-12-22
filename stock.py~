@@ -40,7 +40,7 @@ class Stock:
         return data["Technical Analysis: SMA"][self.date]["SMA"]
 
 
-    def stock_prediction(self):
+   def stock_prediction(self):
         if(self.fiftydayaverage>self.twodayaverage):
             return "buy"
         else:
