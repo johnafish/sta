@@ -8,7 +8,14 @@ class Position:
         self.stock = Stock(symbol)
 
     def open_pnl(self):
+        print(self.stock.current_price())
         return (self.stock.current_price() - self.avg_price) * self.quantity
+
+    def total_cost(self):
+        return self.avg_price * self.quantity
+
+    def current_value(self):
+        return self.stock.current_price() * self.quantity
 
 if __name__ == '__main__':
     td = Position("TD.TO", 13, 73.95)
