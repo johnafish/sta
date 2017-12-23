@@ -5,8 +5,8 @@ class Stock:
     def __init__(self, symbol, date):
         self.symbol = symbol
 
-        if os.environ.get("ALPHAVANTAGE_API_KEY"):
-            self.alphavantage_api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
+        if os.environ.get("APIKEY"):
+            self.alphavantage_api_key = os.environ.get("APIKEY")
         else:
             print(os.environ)
             raise EnvironmentError("Must set ALPHAVANTAGE_API_KEY")
