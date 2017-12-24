@@ -43,14 +43,14 @@ class Stock:
         data = requests.get(url)
         return data.json()["Technical Analysis: SMA"][self.date]["SMA"]
 
-    def get_macd_line(self, timeperiod, type): 
+    def get_macd_line(self, type): 
         #gets either the macd line or the signal line depending on type
         url = "https://www.alphavantage.co/query?function=MACD&symbol="+self.symbol+"&interval=daily&series_type=open&fastperiod=10&apikey="+self.alphavantage_api_key
         r = requests.get(url)
         if(type=="macd"): 
-            return r.json()["Technical Analysis: MACD"][timeperiod]["MACD"] 
+            return r.json()["Technical Analysis: MACD"][self.date]["MACD"] 
         else: 
-            return r.json()["Technical Analysis: MACD"][timeperiod]["MACD_Signal"]
+            return r.json()["Technical Analysis: MACD"][self.date]["MACD_Signal"]
 
 
 
